@@ -32,23 +32,28 @@ services:
       timeout: 10s
       retries: 3
 
-  # Your FastAPI app (for later)
-  # web:
-  #   build: .
-  #   container_name: mindspace_api
-  #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     DATABASE_URL: postgresql://mindspace_user:dev123@postgres:5432/mindspace_db
-  #     REDIS_URL: redis://redis:6379
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-  #     redis:
-  #       condition: service_healthy
-  #   volumes:
-  #     - .:/app
-  #   command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  # FastAPI Application
+  web:
+    build: .
+    container_name: mindease_api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://mindspace_user:dev123@postgres:5432/mindspace_db
+      REDIS_URL: redis://redis:6379
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      USE_AI_PROVIDER: ${USE_AI_PROVIDER:-openai}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./mindease_backend/app:/app/app
+      - ./uploads:/app/uploads
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
 
 volumes:
   postgres_data:
