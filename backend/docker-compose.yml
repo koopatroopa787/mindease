@@ -55,6 +55,22 @@ services:
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     restart: unless-stopped
 
+  # React Frontend
+  frontend:
+    build: ../frontend
+    container_name: mindease_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:8000
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host
+    restart: unless-stopped
+    depends_on:
+      - web
+
 volumes:
   postgres_data:
     driver: local

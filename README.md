@@ -31,6 +31,17 @@ MindEase is an intelligent application that helps you capture, organize, and sea
 - **SQLAlchemy**: ORM for database operations
 - **Celery**: Async task processing (planned)
 
+### Frontend
+- **React 18**: Modern UI library
+- **TypeScript**: Type-safe JavaScript
+- **Vite**: Fast build tool and dev server
+- **Tailwind CSS**: Utility-first CSS framework
+- **React Router**: Client-side routing
+- **TanStack Query**: Data fetching and caching
+- **Axios**: HTTP client
+- **Lucide React**: Beautiful icons
+- **React Dropzone**: File upload interface
+
 ### AI & ML
 - **OpenAI GPT-4 Vision**: Screenshot analysis
 - **OpenAI Whisper**: Audio transcription
@@ -51,38 +62,33 @@ mindease/
 ├── backend/
 │   ├── mindease_backend/
 │   │   ├── app/
-│   │   │   ├── api/
-│   │   │   │   └── v1/
-│   │   │   │       ├── endpoints/
-│   │   │   │       │   ├── screenshots.py    # Screenshot management
-│   │   │   │       │   ├── collections.py    # Collections API
-│   │   │   │       │   ├── search.py         # Search functionality
-│   │   │   │       │   └── analysis.py       # Audio recordings
-│   │   │   │       └── api.py
-│   │   │   ├── config/
-│   │   │   │   ├── settings.py               # App configuration
-│   │   │   │   └── database.py               # Database setup
-│   │   │   ├── models/
-│   │   │   │   ├── screenshots.py            # Screenshot model
-│   │   │   │   ├── collection.py             # Collection model
-│   │   │   │   ├── reminder.py               # Audio recording model
-│   │   │   │   ├── analysis.py               # Analysis results model
-│   │   │   │   └── user.py                   # User model
-│   │   │   ├── schemas/
-│   │   │   │   ├── screenshot.py             # Pydantic schemas
-│   │   │   │   ├── collection.py
-│   │   │   │   ├── search.py
-│   │   │   │   └── audio.py
-│   │   │   ├── services/
-│   │   │   │   ├── ai_service.py             # AI/ML operations
-│   │   │   │   ├── ocr_service.py            # Text extraction
-│   │   │   │   ├── search_service.py         # Search logic
-│   │   │   │   └── storage_service.py        # File management
-│   │   │   └── main.py                       # FastAPI application
+│   │   │   ├── api/v1/endpoints/      # API routes
+│   │   │   ├── config/                # Settings & database
+│   │   │   ├── models/                # Database models
+│   │   │   ├── schemas/               # Pydantic schemas
+│   │   │   ├── services/              # Business logic
+│   │   │   └── main.py                # FastAPI app
 │   │   └── requirements/
-│   │       └── base.txt
 │   ├── docker-compose.yml
 │   ├── Dockerfile
+│   └── .env.example
+├── frontend/
+│   ├── src/
+│   │   ├── api/                       # API client
+│   │   ├── components/                # React components
+│   │   │   ├── Layout.tsx
+│   │   │   ├── ScreenshotUpload.tsx
+│   │   │   ├── ScreenshotGrid.tsx
+│   │   │   └── SearchBar.tsx
+│   │   ├── pages/                     # Page components
+│   │   │   ├── Home.tsx
+│   │   │   ├── Search.tsx
+│   │   │   └── Collections.tsx
+│   │   ├── types/                     # TypeScript types
+│   │   ├── App.tsx                    # Main app component
+│   │   └── main.tsx                   # Entry point
+│   ├── Dockerfile
+│   ├── package.json
 │   └── .env.example
 └── README.md
 ```
@@ -125,32 +131,48 @@ mindease/
    This will start:
    - PostgreSQL database (port 5433)
    - Redis cache (port 6379)
-   - FastAPI application (port 8000)
+   - FastAPI backend (port 8000)
+   - React frontend (port 5173)
 
-5. **Verify the installation**
-   ```bash
-   curl http://localhost:8000/health
-   ```
+5. **Access the application**
+   - **Frontend**: http://localhost:5173
+   - **Backend API**: http://localhost:8000
+   - **API Documentation**: http://localhost:8000/docs
 
 ### Local Development (Without Docker)
 
-1. **Install dependencies**
+**Backend:**
+1. Install dependencies
    ```bash
    cd backend/mindease_backend
    pip install -r requirements/base.txt
    ```
 
-2. **Start PostgreSQL and Redis**
+2. Start PostgreSQL and Redis
    ```bash
    cd backend
    docker-compose up postgres redis -d
    ```
 
-3. **Run the application**
+3. Run the backend
    ```bash
    cd mindease_backend
    uvicorn app.main:app --reload
    ```
+
+**Frontend:**
+1. Install dependencies
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. Start the dev server
+   ```bash
+   npm run dev
+   ```
+
+   Frontend will be available at http://localhost:5173
 
 ## API Documentation
 
