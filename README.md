@@ -22,6 +22,25 @@ MindEase is an intelligent application that helps you capture, organize, and sea
 - **Summarization**: AI-generated summaries of transcriptions
 - **Vector Embeddings**: Semantic search using text embeddings
 
+### Mobile App
+MindEase now includes a full-featured **React Native mobile application**!
+
+- 📱 **Native Mobile App** - iOS and Android support
+- 📸 **Camera Integration** - Capture screenshots directly from your device
+- 🎤 **Native Voice Recording** - Record voice memos with native audio APIs
+- 🔄 **Real-time Sync** - Seamless integration with backend API
+- 📴 **Offline Support** - Works with local caching
+- 🚀 **App Store Ready** - Production-ready for Google Play and Apple App Store
+
+**Quick Start:**
+```bash
+cd mobile
+npm install
+npm start
+```
+
+**[📱 Read Full Mobile Setup Guide →](./MOBILE_APP_SETUP.md)**
+
 ## Technology Stack
 
 ### Backend
@@ -31,7 +50,7 @@ MindEase is an intelligent application that helps you capture, organize, and sea
 - **SQLAlchemy**: ORM for database operations
 - **Celery**: Async task processing (planned)
 
-### Frontend
+### Frontend (Web)
 - **React 18**: Modern UI library
 - **TypeScript**: Type-safe JavaScript
 - **Vite**: Fast build tool and dev server
@@ -41,6 +60,16 @@ MindEase is an intelligent application that helps you capture, organize, and sea
 - **Axios**: HTTP client
 - **Lucide React**: Beautiful icons
 - **React Dropzone**: File upload interface
+
+### Mobile (React Native)
+- **React Native**: Cross-platform mobile framework
+- **Expo**: Development platform and tooling
+- **TypeScript**: Type-safe code
+- **React Navigation**: Native navigation
+- **TanStack Query**: Data fetching and caching
+- **Expo Camera**: Native camera integration
+- **Expo AV**: Native audio recording and playback
+- **Axios**: HTTP client
 
 ### AI & ML
 - **OpenAI GPT-4 Vision**: Screenshot analysis
