@@ -1,6 +1,11 @@
-import { X, Heart, Download, Trash2, Tag, Calendar, FileText } from 'lucide-react';
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { X, Heart, Download, Trash2, Tag, Calendar, FileText, Mic } from 'lucide-react';
 import type { Screenshot } from '../types';
 import { formatDistanceToNow } from 'date-fns';
+import { audioApi } from '../api/client';
+import AudioRecorder from './AudioRecorder';
+import AudioList from './AudioList';
 
 interface ScreenshotModalProps {
   screenshot: Screenshot;
@@ -15,6 +20,40 @@ export default function ScreenshotModal({
   onToggleFavorite,
   onDelete,
 }: ScreenshotModalProps) {
+  const [showAudioRecorder, setShowAudioRecorder] = useState(false);
+  const queryClient = useQueryClient();
+
+  // Fetch audio recordings for this screenshot
+  const { data: audioData } = useQuery({
+    queryKey: ['audio', screenshot.id],
+    queryFn: () => audioApi.getAll({ screenshot_id: screenshot.id, limit: 50 }),
+  });
+
+  // Upload audio mutation
+  const uploadAudioMutation = useMutation({
+    mutationFn: async ({ audioBlob, duration }: { audioBlob: Blob; duration: number }) => {
+      const file = new File([audioBlob], `recording_${Date.now()}.webm`, {
+        type: 'audio/webm',
+      });
+      return audioApi.upload(file, screenshot.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['audio', screenshot.id] });
+      setShowAudioRecorder(false);
+    },
+  });
+
+  // Delete audio mutation
+  const deleteAudioMutation = useMutation({
+    mutationFn: (id: number) => audioApi.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['audio', screenshot.id] });
+    },
+  });
+
+  const handleAudioRecordingComplete = (audioBlob: Blob, duration: number) => {
+    uploadAudioMutation.mutate({ audioBlob, duration });
+  };
   const getImageUrl = (filePath: string) => {
     const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
     return `${baseUrl}/${filePath}`;
@@ -190,6 +229,54 @@ export default function ScreenshotModal({
                     </span>
                   </div>
                 </div>
+              </div>
+
+              {/* Voice Memos */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-2">
+                    <Mic className="w-5 h-5 text-primary-600" />
+                    <h3 className="font-semibold text-gray-900">Voice Memos</h3>
+                    {audioData && audioData.recordings.length > 0 && (
+                      <span className="px-2 py-0.5 bg-primary-100 text-primary-700 text-xs rounded-full">
+                        {audioData.recordings.length}
+                      </span>
+                    )}
+                  </div>
+                  {!showAudioRecorder && (
+                    <button
+                      onClick={() => setShowAudioRecorder(true)}
+                      className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                    >
+                      + Add Voice Memo
+                    </button>
+                  )}
+                </div>
+
+                {/* Audio Recorder */}
+                {showAudioRecorder && (
+                  <div className="mb-4">
+                    <AudioRecorder
+                      onRecordingComplete={handleAudioRecordingComplete}
+                      screenshotId={screenshot.id}
+                      maxDuration={60}
+                    />
+                    <button
+                      onClick={() => setShowAudioRecorder(false)}
+                      className="mt-2 text-sm text-gray-600 hover:text-gray-700"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+
+                {/* Audio List */}
+                {audioData && (
+                  <AudioList
+                    recordings={audioData.recordings}
+                    onDelete={(id) => deleteAudioMutation.mutate(id)}
+                  />
+                )}
               </div>
             </div>
           </div>
