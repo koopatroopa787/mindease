@@ -43,20 +43,22 @@ async def process_screenshot_async(
 ):
     """Background task to process screenshot with AI and OCR"""
     try:
+        from app.services.collection_service import CollectionService
+
         ocr_service = OCRService()
         ai_service = AIService()
-        
+
         # Extract text using OCR
         ocr_result = ocr_service.extract_text(file_path)
         ocr_text = ocr_result.get("text", "")
-        
+
         # Analyze with AI
         ai_analysis = await ai_service.analyze_screenshot(file_path, ocr_text)
-        
+
         # Generate embeddings
         combined_text = f"{ocr_text} {ai_analysis.get('description', '')}"
         text_embedding = await ai_service.generate_embedding(combined_text)
-        
+
         # Update screenshot in database
         screenshot = db.query(Screenshot).filter(Screenshot.id == screenshot_id).first()
         if screenshot:
@@ -67,6 +69,14 @@ async def process_screenshot_async(
             screenshot.text_embedding = text_embedding
             screenshot.is_processed = True
             db.commit()
+            db.refresh(screenshot)
+
+            # Auto-create collections based on tags
+            collection_service = CollectionService(db)
+            created_collections = collection_service.auto_create_collections_from_tags(screenshot)
+
+            if created_collections:
+                print(f"Auto-created {len(created_collections)} collections for screenshot {screenshot_id}")
     except Exception as e:
         print(f"Error processing screenshot {screenshot_id}: {e}")
 

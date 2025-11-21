@@ -3,6 +3,7 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { screenshotApi } from '../api/client';
 import ScreenshotUpload from '../components/ScreenshotUpload';
 import ScreenshotGrid from '../components/ScreenshotGrid';
+import ScreenshotModal from '../components/ScreenshotModal';
 import SearchBar from '../components/SearchBar';
 import { Filter, Star } from 'lucide-react';
 import type { Screenshot } from '../types';
@@ -119,6 +120,16 @@ export default function Home() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Screenshot Detail Modal */}
+      {selectedScreenshot && (
+        <ScreenshotModal
+          screenshot={selectedScreenshot}
+          onClose={() => setSelectedScreenshot(null)}
+          onToggleFavorite={handleToggleFavorite}
+          onDelete={handleDelete}
+        />
       )}
     </div>
   );
