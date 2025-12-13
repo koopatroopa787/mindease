@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Screens
 import HomeScreen from '../screens/HomeScreen';
-import CameraScreen from '../screens/CameraScreen';
+import CameraScreen from '../screens/EnhancedCameraScreen'; // Enhanced version with full workflow
 import SearchScreen from '../screens/SearchScreen';
 import CollectionsScreen from '../screens/CollectionsScreen';
 import ScreenshotDetailScreen from '../screens/ScreenshotDetailScreen';

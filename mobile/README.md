@@ -2,13 +2,27 @@
 
 React Native mobile application for MindEase - AI-powered screenshot management with voice memos.
 
+## ✨ Enhanced Capture Workflow
+
+The app features an **intelligent capture-to-analysis workflow**:
+
+1. **📸 Capture** - Take photo or select from gallery
+2. **💾 Auto-Save** - Immediately saved to device storage
+3. **🤖 AI Analysis** - Automatic upload and processing
+4. **🎤 Voice Memo** - Optional voice context recording
+5. **✅ Results** - View complete AI analysis
+
+**[📖 Read Complete Workflow Guide →](../ENHANCED_MOBILE_WORKFLOW.md)**
+
 ## Features
 
 ### 📸 Screenshot Capture
 - **Camera Integration** - Capture screenshots directly from your device camera
 - **Gallery Import** - Upload existing images from your photo library
+- **Local Storage** - Screenshots automatically saved to device photo library
 - **AI Processing** - Automatic image analysis, OCR, and tagging
 - **Smart Collections** - Auto-organized based on content
+- **Real-time Feedback** - Visual processing indicators
 
 ### 🎤 Voice Memos
 - **Native Recording** - High-quality audio recording (up to 60 seconds)
