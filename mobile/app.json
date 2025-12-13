@@ -1,0 +1,64 @@
+{
+  "expo": {
+    "name": "MindEase",
+    "slug": "mindease-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0284c7"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mindease.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "MindEase needs camera access to capture screenshots",
+        "NSMicrophoneUsageDescription": "MindEase needs microphone access to record voice memos",
+        "NSPhotoLibraryUsageDescription": "MindEase needs photo library access to save and upload screenshots"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0284c7"
+      },
+      "package": "com.mindease.app",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow MindEase to access your camera to capture screenshots"
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow MindEase to access your photo library",
+          "savePhotosPermission": "Allow MindEase to save screenshots to your photo library"
+        }
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow MindEase to access your microphone to record voice memos"
+        }
+      ]
+    ]
+  }
+}
