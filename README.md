@@ -311,21 +311,63 @@ Key configuration options in `.env`:
 
 ## Roadmap
 
-- [ ] Frontend web application (React/Vue)
-- [ ] Mobile app (React Native)
-- [ ] Real-time sync across devices
-- [ ] Collaborative collections
-- [ ] Browser extension for automatic screenshot capture
-- [ ] Advanced filters and sorting
-- [ ] Export functionality (PDF, Markdown)
-- [ ] Integration with external LLMs (@MindSpace query format)
-- [ ] Reminder system
-- [ ] Activity timeline
+✅ **Completed:**
+- ✅ Frontend web application (React + TypeScript)
+- ✅ Mobile app (React Native + Expo)
+- ✅ Voice memo integration
+- ✅ Enhanced capture workflow
+- ✅ Smart collections
+
+🚧 **In Progress:**
+- [ ] Offline mode with local queue
+- [ ] Push notifications
+- [ ] Share extension (iOS/Android)
+- [ ] On-device ML for faster OCR
+
+📋 **Planned:**
+- [ ] Dark mode support
+- [ ] Browser extension
+- [ ] User authentication & multi-user
+- [ ] End-to-end encryption
+- [ ] Collaboration features
 - [ ] Analytics dashboard
+
+**[📖 See all 46 improvement ideas →](./FUTURE_IMPROVEMENTS.md)**
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+### Future Improvements
+
+We've documented **46 potential improvements** across:
+- Mobile enhancements (12 issues)
+- Backend/API improvements (8 issues)
+- AI/ML features (6 issues)
+- UX/UI enhancements (9 issues)
+- Security & privacy (3 issues)
+- DevOps & infrastructure (4 issues)
+- Documentation (4 issues)
+
+**See:** [FUTURE_IMPROVEMENTS.md](./FUTURE_IMPROVEMENTS.md) for the complete list.
+
+### Creating GitHub Issues
+
+Use our helper script to batch-create issues:
+
+```bash
+# Install GitHub CLI first
+brew install gh  # macOS
+gh auth login
+
+# Create high-priority issues
+./scripts/create_issues.sh --auto
+
+# Or use interactive mode
+./scripts/create_issues.sh
+```
+
+See [scripts/README.md](./scripts/README.md) for more details.
 
 ## License
 
