@@ -70,7 +70,7 @@ async def get_related_screenshots(
     """Get screenshots related to the given screenshot"""
     search_service = SearchService(db)
     
-    results = await search_service.get_related_screenshots(
+    results = search_service.get_related_screenshots(
         screenshot_id=screenshot_id,
         user_id=current_user.id,
         limit=limit
